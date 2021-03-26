@@ -1,6 +1,6 @@
 package com.buildlogger.parser;
 
-import com.buildlogger.domain.BuildLogDetails;
+import com.buildlogger.domain.BuildLog;
 import com.buildlogger.exception.InvalidBuildLog;
 import com.buildlogger.util.ApplicationUtils;
 
@@ -27,12 +27,12 @@ public class BuildLogDetailsParser {
         return instance;
     }
 
-    public List<BuildLogDetails> convertToBuildLogs(String logDetails) throws InvalidBuildLog {
+    public List<BuildLog> convertToBuildLogs(String logDetails) throws InvalidBuildLog {
         if (Objects.isNull(logDetails) || logDetails.isEmpty()) {
             throw new InvalidBuildLog("Log details should not empty!");
         }
 
-        List<BuildLogDetails> buildLogDetails = Arrays.stream(logDetails
+        List<BuildLog> buildLogDetails = Arrays.stream(logDetails
                 .split("\\r?\\n"))
                 .filter(line -> Objects.nonNull(line) && !line.trim().isEmpty())
                 .map(this::convertToBuildLog)
@@ -40,33 +40,33 @@ public class BuildLogDetailsParser {
         return buildLogDetails;
     }
 
-    public BuildLogDetails convertToBuildLog(String logLine) {
-        BuildLogDetails buildLogDetails = new BuildLogDetails();
+    public BuildLog convertToBuildLog(String logLine) {
+        BuildLog buildLog = new BuildLog();
         String[] tuples = logLine.split(",");
         for (int ind = 0; ind < tuples.length; ind++) {
             switch (ind) {
                 case 0:
-                    buildLogDetails.setCustomerId(ApplicationUtils.parseNumber(tuples[ind]));
+                    buildLog.setCustomerId(ApplicationUtils.parseNumber(tuples[ind]));
                     break;
                 case 1:
-                    buildLogDetails.setContractId(ApplicationUtils.parseNumber(tuples[ind]));
+                    buildLog.setContractId(ApplicationUtils.parseNumber(tuples[ind]));
                     break;
                 case 2:
-                    buildLogDetails.setGeoZone(tuples[ind]);
+                    buildLog.setGeoZone(tuples[ind]);
                     break;
                 case 3:
-                    buildLogDetails.setTeamCode(tuples[ind]);
+                    buildLog.setTeamCode(tuples[ind]);
                     break;
                 case 4:
-                    buildLogDetails.setProjectCode(tuples[ind]);
+                    buildLog.setProjectCode(tuples[ind]);
                     break;
                 case 5:
-                    buildLogDetails.setBuildDuration(ApplicationUtils.parseNumber(ApplicationUtils.parseString(tuples[ind]).replace("s", "")));
+                    buildLog.setBuildDuration(ApplicationUtils.parseNumber(ApplicationUtils.parseString(tuples[ind]).replace("s", "")));
                     break;
 
             }
         }
-        return buildLogDetails;
+        return buildLog;
     }
 
 

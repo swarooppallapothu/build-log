@@ -1,6 +1,6 @@
 package com.buildlogger.parser;
 
-import com.buildlogger.domain.BuildLogDetails;
+import com.buildlogger.domain.BuildLog;
 import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,7 +14,7 @@ import java.util.List;
  * Created by Swaroop Pallapothu on 26 Mar, 2021
  */
 @RunWith(JUnit4.class)
-public class BuildLogDetailsParserTest extends TestCase {
+public class BuildLogParserTest extends TestCase {
 
     BuildLogDetailsParser buildLogDetailsParser;
     String buildLogAsString;
@@ -31,14 +31,14 @@ public class BuildLogDetailsParserTest extends TestCase {
 
     @Test
     public void test_convertToBuildLogs() throws Exception {
-        List<BuildLogDetails> buildLogs = buildLogDetailsParser.convertToBuildLogs(buildLogAsString);
+        List<BuildLog> buildLogs = buildLogDetailsParser.convertToBuildLogs(buildLogAsString);
         Assert.assertFalse(buildLogs.isEmpty());
         Assert.assertEquals(buildLogs.size(), 5);
     }
 
     @Test
     public void test_checkBuildDuration() throws Exception {
-        List<BuildLogDetails> buildLogs = buildLogDetailsParser.convertToBuildLogs(buildLogAsString);
+        List<BuildLog> buildLogs = buildLogDetailsParser.convertToBuildLogs(buildLogAsString);
         Assert.assertEquals(buildLogs.get(2).getBuildDuration(), 4322);
     }
 

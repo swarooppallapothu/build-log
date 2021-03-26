@@ -3,7 +3,7 @@ package com.buildlogger.domain;
 /**
  * Created by Swaroop Pallapothu on 26 Mar, 2021
  */
-public class BuildLogDetails {
+public class BuildLog {
 
     private int customerId;
     private int contractId;
